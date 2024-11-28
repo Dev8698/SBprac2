@@ -13,7 +13,7 @@ public class FunRestController {
     Teacher Saswade;
 
     @Autowired
-    FunRestController(Teacher Saswade) {
+    public void getSaswade(Teacher Saswade) {
         this.Saswade = Saswade;
     }
 
