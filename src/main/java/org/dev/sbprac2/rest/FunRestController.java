@@ -3,6 +3,7 @@ package org.dev.sbprac2.rest;
 
 import org.dev.sbprac2.services.Teacher;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,7 +14,7 @@ public class FunRestController {
     Teacher Saswade;
 
     @Autowired
-    public void getSaswade(Teacher Saswade) {
+    public void getStatus(@Qualifier("thakurSir") Teacher Saswade) {
         this.Saswade = Saswade;
     }
 

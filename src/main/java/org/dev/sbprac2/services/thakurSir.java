@@ -1,5 +1,9 @@
 package org.dev.sbprac2.services;
 
+
+import org.springframework.stereotype.Component;
+
+@Component
 public class thakurSir implements Teacher{
     @Override
     public String getTodaysSchedule() {
