@@ -1,13 +1,14 @@
 package org.dev.sbprac2.services;
 
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-@Component
+
 public class saswadeSir implements Teacher{
 
     @Override
     public String getTodaysSchedule() {
-        return "YOU WILL CUNDUCT 2 LECTURE AND 1 PRACTICAL";
+        return "saswadeSir : YOU WILL CUNDUCT 2 LECTURE AND 1 PRACTICAL";
     }
 
     @Override
