@@ -39,16 +39,21 @@ public class SBprac2Application {
     }
 
     private void findStudent(StudentDAO studentDAO) {
+
         System.out.println("\n----------- Search Student Details -----------");
         System.out.println("\nEnter Student ID: ");
         Scanner sc = new Scanner(System.in);
         int id = sc.nextInt();
+
+        //Finding and printing student data
         Student founStudent = studentDAO.findById(id);
         System.out.println("\nFound Student ID: " + founStudent.toString());
     }
 
     private void createMultipleStudents(StudentDAO studentDAO) {
         int noOfStud = 0;
+
+        //Asking how many input they wants
         System.out.println("Creating new student object...");
         System.out.print("Enter how man you want to save: ");
         Scanner sc = new Scanner(System.in);
@@ -57,6 +62,8 @@ public class SBprac2Application {
         String[] lastNames = new String[noOfStud];
         String[] Email = new String[noOfStud];
         for (int i = 0; i < noOfStud; i++) {
+
+            //getting the students input
             System.out.println("\n----------- Student "+(i+1)+" Details -----------");
             System.out.print("\nEnter First Name: ");
             firstNames[i] = sc.next();
@@ -66,6 +73,8 @@ public class SBprac2Application {
             Email[i] = sc.next();
             System.out.println("\nSaving Student...");
             Student tempStudent = new Student(firstNames[i],lastNames[i],Email[i]);
+
+            //Saving the Student
             studentDAO.save(tempStudent);
             System.out.println("Student saved!");
             System.out.println("Student Generated ID: " + tempStudent.getId());
