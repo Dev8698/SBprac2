@@ -28,14 +28,21 @@ public class SBprac2Application {
     private void crud(StudentDAO studentDAO) {
         System.out.println("\nSLECT OPTION");
         System.out.println("1. Create a new student" +
-                "\n2.find student");
+                "\n2.find student" +
+                "\n3.Get students List");
         Scanner sc = new Scanner(System.in);
         int option = sc.nextInt();
         switch (option) {
             case 1: createMultipleStudents(studentDAO); break;
             case 2: findStudent(studentDAO); break;
+            case 3: getAllStudents(studentDAO); break;
             default: System.out.println("Invalid option!");
         }
+    }
+
+    private void getAllStudents(StudentDAO studentDAO) {
+        System.out.println("\n----------- ALL STUDENTS -----------");
+        System.out.println(studentDAO.findAll());
     }
 
     private void findStudent(StudentDAO studentDAO) {

@@ -2,15 +2,26 @@ package org.dev.sbprac2.dao;
 
 
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.TypedQuery;
 import jakarta.transaction.Transactional;
 import org.dev.sbprac2.entity.Student;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public class StudentDAOImpl implements StudentDAO{
-
     private EntityManager entityManager;
+
+    @Override
+    @Transactional
+    public List<Student> findAll() {
+
+        TypedQuery<Student> query = entityManager.createQuery("FROM Student", Student.class);
+        return query.getResultList();
+    }
+
 
     @Autowired
     public StudentDAOImpl(EntityManager entityManager) {
