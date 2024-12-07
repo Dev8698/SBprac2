@@ -7,6 +7,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import java.util.List;
 import java.util.Scanner;
 
 @SpringBootApplication
@@ -25,6 +26,7 @@ public class SBprac2Application {
         };
     }
 
+    // This function for menu of action it will call functions accordingly
     private void crud(StudentDAO studentDAO) {
         System.out.println("\nSLECT OPTION");
         System.out.println("1. Create a new student" +
@@ -40,21 +42,88 @@ public class SBprac2Application {
         }
     }
 
+    // when we choose find all students crud will call this function
     private void getAllStudents(StudentDAO studentDAO) {
         System.out.println("\n----------- ALL STUDENTS -----------");
-        System.out.println(studentDAO.findAll());
+        List<Student> allStudents = studentDAO.findAll();
+        for (Student tempStudent : allStudents) {
+            System.out.println(tempStudent);
+        }
     }
 
+    // this is also for menu but for finding student according to need it will also call function accordingly
     private void findStudent(StudentDAO studentDAO) {
-
         System.out.println("\n----------- Search Student Details -----------");
-        System.out.println("\nEnter Student ID: ");
+        System.out.println("\n1. Find student by ID" +
+                "\n2. Find student by First Name" +
+                "\n3. Find student by Last Name" +
+                "\n4. Find student by Email Address");
         Scanner sc = new Scanner(System.in);
-        int id = sc.nextInt();
+        System.out.print("Enter Choice : ");
+        int option = sc.nextInt();
+        switch (option) {
+            case 1: findById(studentDAO); break;
+            case 2: findByFirstName(studentDAO); break;
+            case 3: findByLastName(studentDAO); break;
+            case 4: findByEmail(studentDAO); break;
+        }
 
-        //Finding and printing student data
+    }
+
+    //Function for Find by mail option
+    private void findByEmail(StudentDAO studentDAO) {
+        System.out.println("\n----------- FIND STUDENT BY Email -----------");
+        Scanner sc = new Scanner(System.in);
+        System.out.print("\nEnter Student Email : ");
+        String Email = sc.next();
+        List<Student> Result = studentDAO.findByEmail(Email);
+        //it will check is List is empty or not
+        if (Result.isEmpty()){
+            System.out.println("Student not found!");
+        }else {
+            for (Student tempStudent : Result) {
+                System.out.println(tempStudent);
+            }
+        }
+    }
+
+    private void findByLastName(StudentDAO studentDAO) {
+        System.out.println("\n----------- FIND STUDENT BY Last Name -----------");
+        Scanner sc = new Scanner(System.in);
+        System.out.print("\nEnter Student Last Name: ");
+        String Lname = sc.next();
+        List<Student> Result = studentDAO.findByLastName(Lname);
+        if (Result.isEmpty()){
+            System.out.println("Student not found!");
+        }else {
+            for (Student tempStudent : Result) {
+                System.out.println(tempStudent);
+            }
+        }
+    }
+
+    private void findByFirstName(StudentDAO studentDAO) {
+        System.out.println("\n----------- FIND STUDENT BY FirstName -----------");
+        Scanner sc = new Scanner(System.in);
+        System.out.print("\nEnter Student First Name: ");
+        String fname = sc.next();
+        List<Student> Result = studentDAO.findByName(fname);
+        if (Result.isEmpty()){
+            System.out.println("Student not found!");
+        }else {
+            for (Student tempStudent : Result) {
+                System.out.println(tempStudent);
+            }
+        }
+    }
+
+    private void findById(StudentDAO studentDAO) {
+        System.out.println("\n----------- FIND STUDENT BY ID -----------");
+        Scanner sc = new Scanner(System.in);
+        System.out.print("\nEnter Student ID: ");
+        int id = sc.nextInt();
         Student founStudent = studentDAO.findById(id);
-        System.out.println("\nFound Student ID: " + founStudent.toString());
+        System.out.println(founStudent.toString());
     }
 
     private void createMultipleStudents(StudentDAO studentDAO) {

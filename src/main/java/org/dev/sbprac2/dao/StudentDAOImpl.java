@@ -12,13 +12,35 @@ import java.util.List;
 
 @Repository
 public class StudentDAOImpl implements StudentDAO{
-    private EntityManager entityManager;
+    private final EntityManager entityManager;
 
     @Override
     @Transactional
     public List<Student> findAll() {
 
-        TypedQuery<Student> query = entityManager.createQuery("FROM Student", Student.class);
+        TypedQuery<Student> query = entityManager.createQuery("FROM Student order by lastName", Student.class);
+        return query.getResultList();
+    }
+
+    @Override
+    @Transactional
+    public List<Student> findByName(String firstName) {
+        TypedQuery<Student> query = entityManager.createQuery("FROM Student where firstName = :firstName", Student.class);
+        query.setParameter("firstName", firstName);
+        return query.getResultList();
+    }
+
+    @Override
+    public List<Student> findByEmail(String email) {
+        TypedQuery<Student> query = entityManager.createQuery("FROM Student where email = :email", Student.class);
+        query.setParameter("email", email);
+        return query.getResultList();
+    }
+
+    @Override
+    public List<Student> findByLastName(String lastName) {
+        TypedQuery<Student> query = entityManager.createQuery("FROM Student where lastName = :lastName", Student.class);
+        query.setParameter("lastName", lastName);
         return query.getResultList();
     }
 
