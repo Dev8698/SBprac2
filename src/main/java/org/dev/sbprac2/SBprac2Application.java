@@ -12,7 +12,7 @@ import java.util.Scanner;
 
 @SpringBootApplication
 public class SBprac2Application {
-
+    static Scanner sc = new Scanner(System.in);
     public static void main(String[] args) {
         SpringApplication.run(SBprac2Application.class, args);
     }
@@ -31,15 +31,110 @@ public class SBprac2Application {
         System.out.println("\nSLECT OPTION");
         System.out.println("1. Create a new student" +
                 "\n2.find student" +
-                "\n3.Get students List");
+                "\n3.Get students List" +
+                "\n4.Update Student Information" +
+                "\n5.Delete Student Information");
         Scanner sc = new Scanner(System.in);
         int option = sc.nextInt();
         switch (option) {
             case 1: createMultipleStudents(studentDAO); break;
             case 2: findStudent(studentDAO); break;
             case 3: getAllStudents(studentDAO); break;
+            case 4: updateStudent(studentDAO); break;
+            case 5: deleteStudent(studentDAO); break;
             default: System.out.println("Invalid option!");
         }
+        getAllStudents(studentDAO);
+    }
+
+    private void deleteStudent(StudentDAO studentDAO) {
+        System.out.println("\n----------- Delete Student Data -----------");
+        System.out.print("\nEnter Student Id : ");
+        int id = sc.nextInt();
+        Student student = studentDAO.findById(id);
+        if (student == null){
+            System.out.println("Student Does Not Exists.....");
+        }else {
+            System.out.println("\nDeleting Student Information..........");
+            studentDAO.deleteById(id);
+            System.out.println("\nDeleted Successfully..........");
+        }
+
+    }
+
+    private void updateStudent(StudentDAO studentDAO) {
+        System.out.println("\n----------- Update Student Details -----------");
+        System.out.println("\n1. Update Student First Name" +
+                "\n2. Update student Last Name" +
+                "\n3. Update student Email Address");
+        System.out.print("Enter choice : ");
+        int choice = sc.nextInt();
+        switch (choice) {
+            case 1: updateFirstName(studentDAO); break;
+            case 2: updateLastName(studentDAO); break;
+            case 3: updateEmail(studentDAO); break;
+            default:
+                System.out.println("Invalid Choice..........");
+        }
+
+    }
+
+    private void updateEmail(StudentDAO studentDAO) {
+        System.out.println("\n----------- Update Email -----------");
+        System.out.println("\nEnter Email : ");
+        int id = sc.nextInt();
+        Student student = studentDAO.findById(id);
+        if (student == null){
+            System.out.println("Wrong ID .... ");
+        }else{
+            System.out.println("\nCurrent Email of Student : "+student.getLastName());
+            System.out.print("\nEnter New Email of Student : ");
+            String email = sc.next();
+            student.setEmail(email);
+            System.out.println("Updating Student .......");
+            studentDAO.updateStudent(student);
+            System.out.println("Updated Successfully .......");
+        }
+
+    }
+
+    private void updateLastName(StudentDAO studentDAO) {
+        System.out.println("\n----------- Update Last Name -----------");
+        System.out.println("\nEnter Student Id : ");
+        int id = sc.nextInt();
+        Student student = studentDAO.findById(id);
+        if (student == null){
+            System.out.println("Wrong ID .... ");
+        }else{
+            System.out.println("\nCurrent Last Name of Student : "+student.getLastName());
+            System.out.print("\nEnter New Last Name : ");
+            String lastName = sc.next();
+            student.setLastName(lastName);
+            System.out.println("Updating Student .......");
+            studentDAO.updateStudent(student);
+            System.out.println("Updated Successfully .......");
+        }
+
+    }
+
+    private void updateFirstName(StudentDAO studentDAO) {
+        System.out.println("\n----------- Update First Name -----------");
+        System.out.println("\nEnter Student Id : ");
+        int id = sc.nextInt();
+        Student student = studentDAO.findById(id);
+        if (student == null){
+            System.out.println("Wrong ID .... ");
+        }else{
+            System.out.println("\nCurrent First Name of Student : "+student.getFirstName());
+            System.out.print("\nEnter New First Name : ");
+            String firstName = sc.next();
+            student.setFirstName(firstName);
+            System.out.println("Updating Student .......");
+            studentDAO.updateStudent(student);
+
+            System.out.println("Updated Successfully .......");
+        }
+
     }
 
     // when we choose find all students crud will call this function
@@ -58,7 +153,6 @@ public class SBprac2Application {
                 "\n2. Find student by First Name" +
                 "\n3. Find student by Last Name" +
                 "\n4. Find student by Email Address");
-        Scanner sc = new Scanner(System.in);
         System.out.print("Enter Choice : ");
         int option = sc.nextInt();
         switch (option) {
@@ -73,7 +167,6 @@ public class SBprac2Application {
     //Function for Find by mail option
     private void findByEmail(StudentDAO studentDAO) {
         System.out.println("\n----------- FIND STUDENT BY Email -----------");
-        Scanner sc = new Scanner(System.in);
         System.out.print("\nEnter Student Email : ");
         String Email = sc.next();
         List<Student> Result = studentDAO.findByEmail(Email);
@@ -89,7 +182,6 @@ public class SBprac2Application {
 
     private void findByLastName(StudentDAO studentDAO) {
         System.out.println("\n----------- FIND STUDENT BY Last Name -----------");
-        Scanner sc = new Scanner(System.in);
         System.out.print("\nEnter Student Last Name: ");
         String Lname = sc.next();
         List<Student> Result = studentDAO.findByLastName(Lname);
@@ -104,7 +196,6 @@ public class SBprac2Application {
 
     private void findByFirstName(StudentDAO studentDAO) {
         System.out.println("\n----------- FIND STUDENT BY FirstName -----------");
-        Scanner sc = new Scanner(System.in);
         System.out.print("\nEnter Student First Name: ");
         String fname = sc.next();
         List<Student> Result = studentDAO.findByName(fname);
@@ -119,7 +210,6 @@ public class SBprac2Application {
 
     private void findById(StudentDAO studentDAO) {
         System.out.println("\n----------- FIND STUDENT BY ID -----------");
-        Scanner sc = new Scanner(System.in);
         System.out.print("\nEnter Student ID: ");
         int id = sc.nextInt();
         Student founStudent = studentDAO.findById(id);
@@ -132,7 +222,6 @@ public class SBprac2Application {
         //Asking how many input they wants
         System.out.println("Creating new student object...");
         System.out.print("Enter how man you want to save: ");
-        Scanner sc = new Scanner(System.in);
         noOfStud = sc.nextInt();
         String[] firstNames = new String[noOfStud];
         String[] lastNames = new String[noOfStud];
